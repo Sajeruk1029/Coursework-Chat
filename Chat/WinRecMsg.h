@@ -22,7 +22,7 @@ class WinRecMsg : public QWidget
 	Q_OBJECT
 
 	public:
-		WinRecMsg(QWidget*);
+		explicit WinRecMsg(QWidget*);
 		~WinRecMsg();
 
 	private slots:
@@ -43,8 +43,6 @@ class WinRecMsg : public QWidget
 
 		QUdpSocket *server;
 		QUdpSocket *socket;
-
-		QList<QHostAddress> *listaddrs;
 };
 
 #endif

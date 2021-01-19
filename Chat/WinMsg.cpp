@@ -9,7 +9,6 @@ winLogin(wl), socket(new QUdpSocket(this)), server(new QUdpSocket(this)), login(
 	setLayout(layout);
 	setFixedSize(500, 500);
 
-	//server->bind(QHostAddress::LocalHost, 5554);
 	socket->bind(5554, QUdpSocket::ShareAddress);
 
 	labelhost->setText(labelhost->text() + socket->localAddress().toString());
@@ -22,10 +21,7 @@ winLogin(wl), socket(new QUdpSocket(this)), server(new QUdpSocket(this)), login(
 	linemsg->setPlaceholderText("Text message...");
 
 	layout->addWidget(labellogin);
-	//layout->addWidget(labelhost);
-	//layout->addWidget(labelport);
 	layout->addWidget(linechat);
-	//layout->addWidget(linehost);
 	layout->addWidget(linemsg);
 	layout->addWidget(butsend);
 	layout->addWidget(butexit);
@@ -73,18 +69,7 @@ WinMsg::~WinMsg()
 	delete layout;
 }
 
-void WinMsg::clickButSend()
-{
-	//qDebug() << server->state();
-	//server->connectToHost(QHostAddress(linehost->text()), 5555);
-	//qDebug() << server->state();
-	//server->waitForConnected();
-	//qDebug() << server->state();
-	server->writeDatagram(("[" + *login + "] : " + linemsg->text()).toUtf8(), QHostAddress::Broadcast, 5555);
-	//qDebug() << server->state();
-	//server->disconnectFromHost();
-	//qDebug() << server->state();
-}
+void WinMsg::clickButSend(){ server->writeDatagram(("[" + *login + "] : " + linemsg->text()).toUtf8(), QHostAddress::Broadcast, 5555); }
 
 void WinMsg::clickButExit()
 {

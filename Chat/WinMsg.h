@@ -25,7 +25,7 @@ class WinMsg : public QWidget
 	Q_OBJECT
 
 	public:
-		WinMsg(QWidget*, QString);
+		explicit WinMsg(QWidget*, QString);
 		~WinMsg();
 
 	private slots:

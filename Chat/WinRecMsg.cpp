@@ -2,7 +2,7 @@
 
 WinRecMsg::WinRecMsg(QWidget *wl) : layout(new QBoxLayout(QBoxLayout::Down)), labelhost(new QLabel("Your Address is: ")), labelport(new QLabel("Your port is: ")),
 linemessages(new QTextEdit()), butexit(new QPushButton("Exit")), winLogin(wl),
-server(new QUdpSocket(this)), socket(new QUdpSocket(this)), listaddrs(new QList<QHostAddress>())
+server(new QUdpSocket(this)), socket(new QUdpSocket(this))
 {
 	setWindowTitle("Server");
 	setFixedSize(500, 500);
@@ -16,8 +16,6 @@ server(new QUdpSocket(this)), socket(new QUdpSocket(this)), listaddrs(new QList<
 	labelhost->setText(labelhost->text() + server->localAddress().toString());
 	labelport->setText(labelport->text() + QString::number(5555));
 
-	//layout->addWidget(labelhost);
-	//layout->addWidget(labelport);
 	layout->addWidget(linemessages);
 	layout->addWidget(butexit);
 
@@ -44,8 +42,6 @@ WinRecMsg::~WinRecMsg()
 
 		socket = nullptr;
 	}
-
-	delete listaddrs;
 
 	delete labelhost;
 	delete labelport;
@@ -77,8 +73,6 @@ void WinRecMsg::clickButExit()
 		socket = nullptr;
 	}
 
-	delete listaddrs;
-
 	winLogin->show();
 
 	close();
@@ -93,24 +87,5 @@ void WinRecMsg::ready()
 
 	linemessages->setText(linemessages->toPlainText() + msg);
 
-
-	if((listaddrs->indexOf(datagram.senderAddress()) < 0))
-	{
-		listaddrs->append(datagram.senderAddress());
-	}
-
-	qDebug() << listaddrs->size();
-
-	//for(unsigned char counter = 0; counter < listaddrs->size(); ++counter)
-	//{
-		//qDebug() << server->state();
-		//server->connectToHost(listaddrs->value(counter), 5554);
-		//qDebug() << server->state();
-		//server->waitForConnected();
-		//qDebug() << server->state();
-		server->writeDatagram(msg.toUtf8(), QHostAddress::Broadcast, 5554);
-		//qDebug() << server->state();
-		//server->disconnectFromHost();
-		//qDebug() << server->state();
-	//}
+	server->writeDatagram(msg.toUtf8(), QHostAddress::Broadcast, 5554);
 }

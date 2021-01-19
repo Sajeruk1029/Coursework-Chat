@@ -25,7 +25,7 @@ class WinLogin : public QWidget
 	Q_OBJECT
 
 	public:
-		WinLogin(QSqlDatabase*, QSqlQuery*, QWidget*);
+		explicit WinLogin(QSqlDatabase*, QSqlQuery*, QWidget*);
 		~WinLogin();
 
 	private slots:
