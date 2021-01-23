@@ -1,14 +1,14 @@
 #include "WinRecMsg.h"
 
-WinRecMsg::WinRecMsg(QWidget *wl) : layout(new QBoxLayout(QBoxLayout::Down)), labelhost(new QLabel("Your Address is: ")), labelport(new QLabel("Your port is: ")),
-linemessages(new QTextEdit()), butexit(new QPushButton("Exit")), winLogin(wl),
+WinRecMsg::WinRecMsg(QWidget *wl) : layout(new QBoxLayout(QBoxLayout::Down)), labelhost(new QLabel("Ваш адрес: ")), labelport(new QLabel("Ваш порт: ")),
+linemessages(new QTextEdit()), butexit(new QPushButton("Выход")), winLogin(wl),
 server(new QUdpSocket(this)), socket(new QUdpSocket(this))
 {
-	setWindowTitle("Server");
+	setWindowTitle("Сервер");
 	setFixedSize(500, 500);
 	setLayout(layout);
 
-	linemessages->setPlaceholderText("Messages");
+	linemessages->setPlaceholderText("Сообщения");
 	linemessages->setReadOnly(true);
 
 	socket->bind(5555, QUdpSocket::ShareAddress);

@@ -1,17 +1,17 @@
 #include "WinServerLogin.h"
 
 WinServerLogin::WinServerLogin() : layout(new QBoxLayout(QBoxLayout::Down)), linehostserver(new QLineEdit()), lineloginserver(new QLineEdit()),
-linepasswordserver(new QLineEdit()), butconnect(new QPushButton("Connect server")), butdisconnect(new QPushButton("Disconnect server")),
-butcontinue(new QPushButton("Continue")), butloginserver(new QPushButton("Log in as a server")), db(nullptr),
+linepasswordserver(new QLineEdit()), butconnect(new QPushButton("Подключиться к серверу")), butdisconnect(new QPushButton("Отключиться от сервера")),
+butcontinue(new QPushButton("Продолжить")), butloginserver(new QPushButton("Войти как сервер")), db(nullptr),
 query(nullptr), winLogin(nullptr), winRecMsg(nullptr)
 {
-	setWindowTitle("Auth server");
+	setWindowTitle("Авторизация на сервере");
 	setLayout(layout);
 	setFixedSize(300, 200);
 
-	linehostserver->setPlaceholderText("Host");
-	lineloginserver->setPlaceholderText("Login");
-	linepasswordserver->setPlaceholderText("Password");
+	linehostserver->setPlaceholderText("Хост");
+	lineloginserver->setPlaceholderText("Логин");
+	linepasswordserver->setPlaceholderText("Пароль");
 
 	linepasswordserver->setEchoMode(QLineEdit::EchoMode::Password);
 
@@ -65,7 +65,7 @@ void WinServerLogin::clickButConnect()
 	{
 		query = new QSqlQuery(*db);
 
-		QMessageBox::warning(this, "Debug", "Success");
+		QMessageBox::warning(this, "Сообщение", "Успех");
 
 		butconnect->setEnabled(false);
 		butdisconnect->setEnabled(true);
@@ -77,7 +77,7 @@ void WinServerLogin::clickButConnect()
 	}
 	else
 	{
-		QMessageBox::warning(this, "Debug", "Failed");
+		QMessageBox::warning(this, "Ошибка", "неверные данные для входа");
 
 		QSqlDatabase::removeDatabase("conn");
 

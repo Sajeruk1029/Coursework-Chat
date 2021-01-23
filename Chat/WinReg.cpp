@@ -1,14 +1,14 @@
 #include "WinReg.h"
 
-WinReg::WinReg(QSqlDatabase *bd, QSqlQuery *querydb, QWidget *wl) : layout(new QBoxLayout(QBoxLayout::Down)), butreg(new QPushButton("Sign in")), butback(new QPushButton("Log in")),
+WinReg::WinReg(QSqlDatabase *bd, QSqlQuery *querydb, QWidget *wl) : layout(new QBoxLayout(QBoxLayout::Down)), butreg(new QPushButton("Зарегистрироваться")), butback(new QPushButton("Войти")),
 linelogin(new QLineEdit()), linepassword(new QLineEdit()), db(bd), query(querydb), winLogin(wl)
 {
-	setWindowTitle("Sign in");
+	setWindowTitle("Регистрация");
 	setLayout(layout);
 	setFixedSize(200, 150);
 
-	linelogin->setPlaceholderText("Login");
-	linepassword->setPlaceholderText("Password");
+	linelogin->setPlaceholderText("Логин");
+	linepassword->setPlaceholderText("Пароль");
 
 	linepassword->setEchoMode(QLineEdit::EchoMode::Password);
 
@@ -36,11 +36,11 @@ void WinReg::clickButReg()
 {
 	if(query->exec("insert into accounts values(null, '" + linelogin->text() + "', '" + QCryptographicHash::hash(linepassword->text().toUtf8(), QCryptographicHash::Sha256).toHex() + "')"))
 	{
-		QMessageBox::warning(this, "Debug", "Success");
+		QMessageBox::warning(this, "Сообщение", "Успех");
 	}
 	else
 	{
-		QMessageBox::warning(this, "Debug", query->lastError().text());
+		QMessageBox::warning(this, "Ошибка", query->lastError().text());
 	}
 }
 

@@ -1,15 +1,15 @@
 #include "WinLogin.h"
 
-WinLogin::WinLogin(QSqlDatabase *bd, QSqlQuery *querydb, QWidget *wsl) : layout(new QBoxLayout(QBoxLayout::Down)), linelogin(new QLineEdit()), linepassword(new QLineEdit()),butlogin(new QPushButton("Log in")), butreg(new QPushButton("Sign in")), butback(new QPushButton("Back")),
+WinLogin::WinLogin(QSqlDatabase *bd, QSqlQuery *querydb, QWidget *wsl) : layout(new QBoxLayout(QBoxLayout::Down)), linelogin(new QLineEdit()), linepassword(new QLineEdit()),butlogin(new QPushButton("Вход")), butreg(new QPushButton("Регистрация")), butback(new QPushButton("Назад")),
 db(bd), query(querydb), winServerLogin(wsl),
 winReg(nullptr), winMsg(nullptr)
 {
-	setWindowTitle("Log in");
+	setWindowTitle("Вход");
 	setLayout(layout);
 	setFixedSize(300, 150);
 
-	linelogin->setPlaceholderText("Login");
-	linepassword->setPlaceholderText("Password");
+	linelogin->setPlaceholderText("Логин");
+	linepassword->setPlaceholderText("Пароль");
 
 	linelogin->setMaxLength(20);
 	linepassword->setMaxLength(20);
@@ -48,7 +48,7 @@ void WinLogin::clickButLogin()
 
 	if(!query->next())
 	{
-		QMessageBox::warning(this, "Debug", "Failed");
+		QMessageBox::warning(this, "Ошибка", "Неверные данные для входа");
 		return;
 	}
 

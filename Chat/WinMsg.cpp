@@ -1,11 +1,11 @@
 #include "WinMsg.h"
 
 WinMsg::WinMsg(QWidget *wl, QString name) : layout(new QBoxLayout(QBoxLayout::Down)), butsend(new QPushButton("Send")), butexit(new QPushButton("Exit")),
-labellogin(new QLabel("Your login is: " + name)), labelhost(new QLabel("Your Address is: ")), labelport(new QLabel("Your port is: ")),
+labellogin(new QLabel("Ваш ник: " + name)), labelhost(new QLabel("Ваш адрес: ")), labelport(new QLabel("Ваш порт: ")),
 linemsg(new QLineEdit()), linehost(new QLineEdit()), linechat(new QTextEdit()),
 winLogin(wl), socket(new QUdpSocket(this)), server(new QUdpSocket(this)), login(new QString(name))
 {
-	setWindowTitle("Chat");
+	setWindowTitle("Чат");
 	setLayout(layout);
 	setFixedSize(500, 500);
 
@@ -15,10 +15,10 @@ winLogin(wl), socket(new QUdpSocket(this)), server(new QUdpSocket(this)), login(
 	labelport->setText(labelport->text() + QString::number(5554));
 
 	linechat->setReadOnly(true);
-	linechat->setPlaceholderText("Messages");
+	linechat->setPlaceholderText("Сообщения");
 
-	linehost->setPlaceholderText("Address");
-	linemsg->setPlaceholderText("Text message...");
+	linehost->setPlaceholderText("Адрес");
+	linemsg->setPlaceholderText("Текст сообщения...");
 
 	layout->addWidget(labellogin);
 	layout->addWidget(linechat);
