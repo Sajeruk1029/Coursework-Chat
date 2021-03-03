@@ -2,7 +2,8 @@
 
 WinRecMsg::WinRecMsg(QWidget *wl) : layout(new QBoxLayout(QBoxLayout::Down)), labelhost(new QLabel("Ваш адрес: ")), labelport(new QLabel("Ваш порт: ")),
 linemessages(new QTextEdit()), butexit(new QPushButton("Выход")), winLogin(wl),
-server(new QUdpSocket(this)), socket(new QUdpSocket(this))
+server(new QUdpSocket(this)), socket(new QUdpSocket(this)),
+list(new QList<QString>())
 {
 	setWindowTitle("Сервер");
 	setFixedSize(500, 500);
@@ -11,7 +12,7 @@ server(new QUdpSocket(this)), socket(new QUdpSocket(this))
 	linemessages->setPlaceholderText("Сообщения");
 	linemessages->setReadOnly(true);
 
-	socket->bind(5555, QUdpSocket::ShareAddress);
+	socket->bind(QHostAddress::Any, 5555);
 
 	labelhost->setText(labelhost->text() + server->localAddress().toString());
 	labelport->setText(labelport->text() + QString::number(5555));
@@ -50,6 +51,8 @@ WinRecMsg::~WinRecMsg()
 
 	delete butexit;
 
+	delete list;
+
 	delete layout;
 }
 
@@ -87,5 +90,15 @@ void WinRecMsg::ready()
 
 	linemessages->setText(linemessages->toPlainText() + msg);
 
-	server->writeDatagram(msg.toUtf8(), QHostAddress::Broadcast, 5554);
+	if(list->indexOf(datagram.senderAddress().toString().split(':')[3]) == -1)
+	{
+		list->append(datagram.senderAddress().toString().split(':')[3]);
+	}
+
+	//qDebug() << datagram.senderAddress().toString().split(':')[3];
+
+	for(int counter = 0; counter < list->count(); ++counter)
+	{
+		server->writeDatagram(msg.toUtf8(), QHostAddress(list->value(counter)), 5554);
+	}
 }

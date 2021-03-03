@@ -43,6 +43,8 @@ class WinRecMsg : public QWidget
 
 		QUdpSocket *server;
 		QUdpSocket *socket;
+
+		QList<QString> *list;
 };
 
 #endif

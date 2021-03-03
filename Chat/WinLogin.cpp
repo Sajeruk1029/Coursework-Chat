@@ -44,7 +44,12 @@ WinLogin::~WinLogin()
 
 void WinLogin::clickButLogin()
 {
-	query->exec("select id from accounts where login='" + linelogin->text() + "' and password='" + QCryptographicHash::hash(linepassword->text().toUtf8(), QCryptographicHash::Sha256).toHex() + "'");
+	query->prepare("select id from accounts where login= :Login and password= :Password");
+
+	query->bindValue(":Login", linelogin->text());
+	query->bindValue(":Password", QCryptographicHash::hash(linepassword->text().toUtf8(), QCryptographicHash::Sha256).toHex());
+
+	query->exec();
 
 	if(!query->next())
 	{

@@ -9,7 +9,7 @@ winLogin(wl), socket(new QUdpSocket(this)), server(new QUdpSocket(this)), login(
 	setLayout(layout);
 	setFixedSize(500, 500);
 
-	socket->bind(5554, QUdpSocket::ShareAddress);
+	socket->bind(QHostAddress::Any, 5554);
 
 	labelhost->setText(labelhost->text() + socket->localAddress().toString());
 	labelport->setText(labelport->text() + QString::number(5554));
@@ -23,6 +23,7 @@ winLogin(wl), socket(new QUdpSocket(this)), server(new QUdpSocket(this)), login(
 	layout->addWidget(labellogin);
 	layout->addWidget(linechat);
 	layout->addWidget(linemsg);
+	layout->addWidget(linehost);
 	layout->addWidget(butsend);
 	layout->addWidget(butexit);
 
@@ -69,7 +70,7 @@ WinMsg::~WinMsg()
 	delete layout;
 }
 
-void WinMsg::clickButSend(){ server->writeDatagram(("[" + *login + "] : " + linemsg->text()).toUtf8(), QHostAddress::Broadcast, 5555); }
+void WinMsg::clickButSend(){ server->writeDatagram(("[" + *login + "] : " + linemsg->text()).toUtf8(), QHostAddress(linehost->text()), 5555); }
 
 void WinMsg::clickButExit()
 {

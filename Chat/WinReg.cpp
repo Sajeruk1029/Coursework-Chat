@@ -34,7 +34,12 @@ WinReg::~WinReg()
 
 void WinReg::clickButReg()
 {
-	if(query->exec("insert into accounts values(null, '" + linelogin->text() + "', '" + QCryptographicHash::hash(linepassword->text().toUtf8(), QCryptographicHash::Sha256).toHex() + "')"))
+	query->prepare("insert into accounts values(null, :Login, :Password)");
+
+	query->bindValue(":Login", linelogin->text());
+	query->bindValue(":Password", QCryptographicHash::hash(linepassword->text().toUtf8(), QCryptographicHash::Sha256).toHex());
+
+	if(query->exec())
 	{
 		QMessageBox::warning(this, "Сообщение", "Успех");
 	}
