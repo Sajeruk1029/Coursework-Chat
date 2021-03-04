@@ -10,6 +10,8 @@
 #include <QLabel>
 #include <QTextEdit>
 
+#include <QMessageBox>
+
 #include <QtSql/QSql>
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>

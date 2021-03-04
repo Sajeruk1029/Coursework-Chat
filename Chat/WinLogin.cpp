@@ -44,6 +44,20 @@ WinLogin::~WinLogin()
 
 void WinLogin::clickButLogin()
 {
+	if(linelogin->text() == "")
+	{
+		QMessageBox::warning(this, "Ошибка", "Поле логина не должно быть пустым!");
+
+		return;
+	}
+
+	if(linepassword->text() == "")
+	{
+		QMessageBox::warning(this, "Ошибка", "Поле пароля не должно быть пустым!");
+
+		return;
+	}
+
 	query->prepare("select id from accounts where login= :Login and password= :Password");
 
 	query->bindValue(":Login", linelogin->text());

@@ -13,6 +13,10 @@ query(nullptr), winLogin(nullptr), winRecMsg(nullptr)
 	lineloginserver->setPlaceholderText("Логин");
 	linepasswordserver->setPlaceholderText("Пароль");
 
+	linehostserver->setMaxLength(20);
+	lineloginserver->setMaxLength(20);
+	linepasswordserver->setMaxLength(20);
+
 	linepasswordserver->setEchoMode(QLineEdit::EchoMode::Password);
 
 	butdisconnect->setEnabled(false);
@@ -52,6 +56,27 @@ WinServerLogin::~WinServerLogin()
 
 void WinServerLogin::clickButConnect()
 {
+	if(linehostserver->text() == "")
+	{
+		QMessageBox::warning(this, "Ошибка", "Поле хоста не должно быть пустым!");
+
+		return;
+	}
+
+	if(lineloginserver->text() == "")
+	{
+		QMessageBox::warning(this, "Ошибка", "Поле логина не должно быть пустым!");
+
+		return;
+	}
+
+	if(linepasswordserver->text() == "")
+	{
+		QMessageBox::warning(this, "Ошибка", "Поле пароля не должно быть пустым!");
+
+		return;
+	}
+
 	db = new QSqlDatabase();
 
 	*db = QSqlDatabase::addDatabase("QMYSQL", "conn");

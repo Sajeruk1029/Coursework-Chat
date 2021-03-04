@@ -1,6 +1,6 @@
 #include "WinMsg.h"
 
-WinMsg::WinMsg(QWidget *wl, QString name) : layout(new QBoxLayout(QBoxLayout::Down)), butsend(new QPushButton("Send")), butexit(new QPushButton("Exit")),
+WinMsg::WinMsg(QWidget *wl, QString name) : layout(new QBoxLayout(QBoxLayout::Down)), butsend(new QPushButton("Отправить")), butexit(new QPushButton("Выход")),
 labellogin(new QLabel("Ваш ник: " + name)), labelhost(new QLabel("Ваш адрес: ")), labelport(new QLabel("Ваш порт: ")),
 linemsg(new QLineEdit()), linehost(new QLineEdit()), linechat(new QTextEdit()),
 winLogin(wl), socket(new QUdpSocket(this)), server(new QUdpSocket(this)), login(new QString(name))
@@ -19,6 +19,9 @@ winLogin(wl), socket(new QUdpSocket(this)), server(new QUdpSocket(this)), login(
 
 	linehost->setPlaceholderText("Адрес");
 	linemsg->setPlaceholderText("Текст сообщения...");
+
+	linehost->setMaxLength(20);
+	linemsg->setMaxLength(500);
 
 	layout->addWidget(labellogin);
 	layout->addWidget(linechat);
@@ -70,7 +73,24 @@ WinMsg::~WinMsg()
 	delete layout;
 }
 
-void WinMsg::clickButSend(){ server->writeDatagram(("[" + *login + "] : " + linemsg->text()).toUtf8(), QHostAddress(linehost->text()), 5555); }
+void WinMsg::clickButSend()
+{
+	if(linemsg->text() == "")
+	{
+		QMessageBox::warning(this, "Ошибка", "Поле с текстом сообщения не должно быть пустым!");
+
+		return;
+	}
+
+	if(linehost->text() == "")
+	{
+		QMessageBox::warning(this, "Ошибка", "Поле с хостом не должно быть пустым!");
+
+		return;
+	}
+
+	server->writeDatagram(("[" + *login + "] : " + linemsg->text()).toUtf8(), QHostAddress(linehost->text()), 5555);
+}
 
 void WinMsg::clickButExit()
 {

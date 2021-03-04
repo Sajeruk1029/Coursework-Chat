@@ -10,6 +10,9 @@ linelogin(new QLineEdit()), linepassword(new QLineEdit()), db(bd), query(querydb
 	linelogin->setPlaceholderText("Логин");
 	linepassword->setPlaceholderText("Пароль");
 
+	linelogin->setMaxLength(20);
+	linepassword->setMaxLength(20);
+
 	linepassword->setEchoMode(QLineEdit::EchoMode::Password);
 
 	layout->addWidget(linelogin);
@@ -34,6 +37,20 @@ WinReg::~WinReg()
 
 void WinReg::clickButReg()
 {
+	if(linelogin->text() == "")
+	{
+		QMessageBox::warning(this, "Ошибка", "Поле логина не должно быть пустым!");
+
+		return;
+	}
+
+	if(linepassword->text() == "")
+	{
+		QMessageBox::warning(this, "Ошибка", "Поле пароля не должно быть пустым!");
+
+		return;
+	}
+
 	query->prepare("insert into accounts values(null, :Login, :Password)");
 
 	query->bindValue(":Login", linelogin->text());
